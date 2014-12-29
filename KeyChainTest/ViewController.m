@@ -42,8 +42,8 @@
 // 2). How to Add an item to keychain
 -(void)addItem
 {
-    NSString *key = @"YOUR_KEY";
-    NSData *value = [@"YOUR_DATA" dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *key = @"HAPPY_KEY";
+    NSData *value = [@"Happy1" dataUsingEncoding:NSUTF8StringEncoding];
     
     if([keychain insert:key :value])
     {
@@ -56,7 +56,7 @@
 // 3). Finding an item in the keychain
 -(void)findItem
 {
-    NSString *key= @"YOUR_KEY";
+    NSString *key= @"HAPPY_KEY";
     NSData *data =[keychain find:key];
     if(data == nil)
     {
@@ -71,8 +71,8 @@
 // 4) .Update an item in the keychain
 -(void)updateItem
 {
-    NSString *key = @"YOUR_KEY";
-    NSData *value2 = [@"NEW_VALUE" dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *key = @"HAPPY_KEY";
+    NSData *value2 = [@"Happy2" dataUsingEncoding:NSUTF8StringEncoding];
     
     if([keychain update:key :value2])
     {
@@ -85,7 +85,7 @@
 //5). Remove an item from keychain
 -(void)removeItem
 {
-    NSString *key = @"YOUR_KEY";
+    NSString *key = @"HAPPY_KEY";
     if([keychain remove:key])
     {
         NSLog(@"Successfully removed data");
