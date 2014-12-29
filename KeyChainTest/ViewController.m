@@ -9,7 +9,7 @@
 #import "ViewController.h"
 
 #define SERVICE_NAME @"HAPPY_TEST"
-#define GROUP_NAME @"com.happytest.KeyChainTest" //GROUP NAME should start with application identifier.
+#define GROUP_NAME @"AppIdentifierPrefix.com.happytest.KeyChainTest" //GROUP NAME should start with application identifier prefix.
 
 @interface ViewController ()
 
