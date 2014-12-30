@@ -23,75 +23,73 @@
     // 1). Initialization of the class
     keychain = [[HTKeychain alloc] initWithService:SERVICE_NAME withGroup:nil];
     
-    // 2). How to Add an item to keychain
+    // 2). Add an item to keychain
     [self addItem];
     
-    // 3). Finding an item in the keychain
+    // 3). Find an item in the keychain
     [self findItem];
     
-    // 4) .Update an item in the keychain
+    // 4). Update an item in the keychain
     [self updateItem];
     
-    // 3). Finding an item in the keychain
+    // 3). Find an item in the keychain
     [self findItem];
     
-    //5). Remove an item from keychain
+    // 5). Remove an item from keychain
     [self removeItem];
 }
 
-// 2). How to Add an item to keychain
+// 2). Add an item to keychain
 -(void)addItem
 {
     NSString *key = @"HAPPY_KEY";
     NSData *value = [@"Happy1" dataUsingEncoding:NSUTF8StringEncoding];
     
-    if([keychain insert:key :value])
-    {
+    if([keychain insert:key :value]) {
         NSLog(@"Successfully added data");
     }
-    else
-        NSLog(@"Failed to  add data");
+    else {
+        NSLog(@"Failed to add data");
+
+    }
 }
 
-// 3). Finding an item in the keychain
+// 3). Find an item in the keychain
 -(void)findItem
 {
     NSString *key= @"HAPPY_KEY";
     NSData *data =[keychain find:key];
-    if(data == nil)
-    {
+    
+    if(data == nil) {
         NSLog(@"Keychain data not found");
     }
-    else
-    {
+    else {
         NSLog(@"Data is = %@",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     }
 }
 
-// 4) .Update an item in the keychain
+// 4). Update an item in the keychain
 -(void)updateItem
 {
     NSString *key = @"HAPPY_KEY";
     NSData *value2 = [@"Happy2" dataUsingEncoding:NSUTF8StringEncoding];
     
-    if([keychain update:key :value2])
-    {
+    if([keychain update:key :value2]) {
         NSLog(@"Successfully updated data");
     }
-    else
+    else {
         NSLog(@"Failed to add data");
+    }
 }
 
-//5). Remove an item from keychain
+// 5). Remove an item from keychain
 -(void)removeItem
 {
     NSString *key = @"HAPPY_KEY";
-    if([keychain remove:key])
-    {
+    if([keychain remove:key]) {
         NSLog(@"Successfully removed data");
     }
-    else
-    {
+    else {
         NSLog(@"Unable to remove data");
     }
 }

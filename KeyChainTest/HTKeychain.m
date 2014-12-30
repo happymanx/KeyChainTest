@@ -27,7 +27,6 @@
 
 -(NSMutableDictionary *) prepareDict:(NSString *)key
 {
-    
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     [dict setObject:(__bridge id)kSecClassGenericPassword forKey:(__bridge id)kSecClass];
     
@@ -41,20 +40,19 @@
     if(group != nil)
         [dict setObject:group forKey:(__bridge id)kSecAttrAccessGroup];
     
-    return  dict;
-    
+    return dict;
 }
 
 -(BOOL) insert:(NSString *)key :(NSData *)data
 {
-    NSMutableDictionary * dict =[self prepareDict:key];
+    NSMutableDictionary *dict =[self prepareDict:key];
     [dict setObject:data forKey:(__bridge id)kSecValueData];
     
     OSStatus status = SecItemAdd((__bridge CFDictionaryRef)dict, NULL);
-    if(errSecSuccess != status) {
-        NSLog(@"Unable add item with key = %@ error:%d",key,(int)status);
+    if(status != errSecSuccess) {
+        NSLog(@"Unable add item with key = %@ error: %d",key,(int)status);
     }
-    return (errSecSuccess == status);
+    return (status == errSecSuccess);
 }
 
 -(NSData*) find:(NSString *)key
@@ -65,40 +63,36 @@
     CFTypeRef result = NULL;
     OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)dict,&result);
     
-    if( status != errSecSuccess) {
-        NSLog(@"Unable to fetch item for key %@ with error:%d",key,(int)status);
+    if(status != errSecSuccess) {
+        NSLog(@"Unable to fetch item for key %@ with error: %d",key,(int)status);
         return nil;
     }
     
     return (__bridge NSData *)result;
 }
 
--(BOOL) update:(NSString*)key :(NSData *) data
+-(BOOL) update:(NSString*)key :(NSData *)data
 {
-    NSMutableDictionary * dictKey =[self prepareDict:key];
+    NSMutableDictionary *dictKey =[self prepareDict:key];
     
-    NSMutableDictionary * dictUpdate =[[NSMutableDictionary alloc] init];
+    NSMutableDictionary *dictUpdate =[[NSMutableDictionary alloc] init];
     [dictUpdate setObject:data forKey:(__bridge id)kSecValueData];
     
     OSStatus status = SecItemUpdate((__bridge CFDictionaryRef)dictKey, (__bridge CFDictionaryRef)dictUpdate);
-    if(errSecSuccess != status) {
-        NSLog(@"Unable add update with key = %@ error:%d",key,(int)status);
+    if(status != errSecSuccess) {
+        NSLog(@"Unable add update with key = %@ error: %d",key,(int)status);
     }
-    return (errSecSuccess == status);
-    
-    return YES;
-    
+    return (status == errSecSuccess);
 }
 
 -(BOOL) remove:(NSString *)key
 {
     NSMutableDictionary *dict = [self prepareDict:key];
     OSStatus status = SecItemDelete((__bridge CFDictionaryRef)dict);
-    if( status != errSecSuccess) {
-        NSLog(@"Unable to remove item for key %@ with error:%d",key,(int)status);
-        return NO;
+    if(status != errSecSuccess) {
+        NSLog(@"Unable to remove item for key %@ with error: %d",key,(int)status);
     }
-    return  YES;
+    return (status == errSecSuccess);
 }
 
 @end
